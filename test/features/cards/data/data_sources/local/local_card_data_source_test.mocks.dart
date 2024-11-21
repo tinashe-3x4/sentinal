@@ -3,16 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:typed_data' as _i7;
+import 'dart:typed_data' as _i4;
 
 import 'package:drift/drift.dart' as _i2;
-import 'package:drift/src/runtime/types/mapping.dart' as _i8;
+import 'package:drift/src/runtime/types/mapping.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:sentinal/app/database/tables/cards_table.dart' as _i6;
-import 'package:sentinal/features/cards/data/data_sources/local/local_card_data_source.dart'
-    as _i3;
-import 'package:sentinal/features/cards/data/models/card_model.dart' as _i5;
+import 'package:sentinal/app/database/tables/cards_table.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -49,59 +45,10 @@ class _FakeColumnBuilder_1<T extends Object> extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [LocalCardDataSource].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockLocalCardDataSource extends _i1.Mock
-    implements _i3.LocalCardDataSource {
-  MockLocalCardDataSource() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i4.Future<void> insertCard(_i5.CardModel? cardModel) => (super.noSuchMethod(
-        Invocation.method(
-          #insertCard,
-          [cardModel],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<List<_i5.CardModel>> fetchAllCards() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchAllCards,
-          [],
-        ),
-        returnValue: _i4.Future<List<_i5.CardModel>>.value(<_i5.CardModel>[]),
-      ) as _i4.Future<List<_i5.CardModel>>);
-
-  @override
-  _i4.Future<void> deleteCard(String? id) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteCard,
-          [id],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<void> updateCard(_i5.CardModel? cardModel) => (super.noSuchMethod(
-        Invocation.method(
-          #updateCard,
-          [cardModel],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-}
-
 /// A class which mocks [Cards].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCards extends _i1.Mock implements _i6.Cards {
+class MockCards extends _i1.Mock implements _i3.Cards {
   MockCards() {
     _i1.throwOnMissingStub(this);
   }
@@ -287,19 +234,19 @@ class MockCards extends _i1.Mock implements _i6.Cards {
       ) as _i2.ColumnBuilder<DateTime>);
 
   @override
-  _i2.ColumnBuilder<_i7.Uint8List> blob() => (super.noSuchMethod(
+  _i2.ColumnBuilder<_i4.Uint8List> blob() => (super.noSuchMethod(
         Invocation.method(
           #blob,
           [],
         ),
-        returnValue: _FakeColumnBuilder_1<_i7.Uint8List>(
+        returnValue: _FakeColumnBuilder_1<_i4.Uint8List>(
           this,
           Invocation.method(
             #blob,
             [],
           ),
         ),
-      ) as _i2.ColumnBuilder<_i7.Uint8List>);
+      ) as _i2.ColumnBuilder<_i4.Uint8List>);
 
   @override
   _i2.ColumnBuilder<double> real() => (super.noSuchMethod(
@@ -318,7 +265,7 @@ class MockCards extends _i1.Mock implements _i6.Cards {
 
   @override
   _i2.ColumnBuilder<T> customType<T extends Object>(
-          _i8.UserDefinedSqlType<T>? type) =>
+          _i5.UserDefinedSqlType<T>? type) =>
       (super.noSuchMethod(
         Invocation.method(
           #customType,

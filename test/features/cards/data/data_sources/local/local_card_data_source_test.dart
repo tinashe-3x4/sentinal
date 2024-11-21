@@ -4,6 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:sentinal/app/database/app_database.dart';
 import 'package:sentinal/app/database/tables/cards_table.dart';
 import 'package:sentinal/features/cards/data/data_sources/local/local_card_data_source.dart';
+import 'package:sentinal/features/cards/data/data_sources/local/local_card_data_source_impl.dart';
 import 'package:sentinal/features/cards/data/models/card_model.dart';
 
 @GenerateMocks([Cards])
@@ -15,7 +16,7 @@ void main() {
   setUp(() {
     db = AppDatabase.forTesting(NativeDatabase.memory());
 
-    dataSource = LocalCardDataSource(db);
+    dataSource = LocalCardDataSourceImpl(db);
   });
 
   tearDown(() async {
@@ -33,7 +34,7 @@ void main() {
 
     await dataSource.addCard(cardModel);
 
-    final cards = await dataSource.getAllCards();
+    final cards = await dataSource.getCards();
 
     expect(cards, isNotEmpty);
     expect(cards.first.id, equals('1'));
@@ -59,7 +60,7 @@ void main() {
     await dataSource.addCard(card1);
     await dataSource.addCard(card2);
 
-    final cards = await dataSource.getAllCards();
+    final cards = await dataSource.getCards();
 
     expect(cards.length, equals(2));
     expect(cards.map((card) => card.id), containsAll(['1', '2']));
@@ -78,7 +79,7 @@ void main() {
 
     await dataSource.deleteCard('1');
 
-    final cards = await dataSource.getAllCards();
+    final cards = await dataSource.getCards();
 
     expect(cards, isEmpty);
   });
@@ -104,7 +105,7 @@ void main() {
 
     await dataSource.updateCard(updatedCardModel);
 
-    final cards = await dataSource.getAllCards();
+    final cards = await dataSource.getCards();
 
     expect(cards.first.cardNumber, equals('1111 2222 3333 4444'));
     expect(cards.first.expirationDate, equals('01/26'));
