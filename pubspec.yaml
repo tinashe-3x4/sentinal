@@ -13,15 +13,30 @@ dependencies:
   flutter_bloc: ^8.1.4
   flutter_localizations:
     sdk: flutter
-  intl: ^0.18.1
+  fpdart: ^1.1.1
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
+  intl: ^0.19.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   bloc_test: ^9.1.6
+  build_runner: ^2.4.13
   flutter_test:
     sdk: flutter
+  json_serializable: ^6.9.0
   mocktail: ^1.0.3
   very_good_analysis: ^5.1.0
 
 flutter:
   uses-material-design: true
   generate: true
+
+scripts:
+  build: fvm flutter build web --dart-define=FLAVOR=stage
+  build-prod: fvm flutter build web --dart-define=FLAVOR=prod
+  test: fvm flutter test
+  clean: fvm flutter clean
+  generate: dart run build_runner build --delete-conflicting-outputs
+  clean-generate: fvm flutter clean && fvm flutter pub get && dart run
+    build_runner build --delete-conflicting-outputs
