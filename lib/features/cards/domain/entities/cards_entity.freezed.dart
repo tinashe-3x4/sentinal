@@ -14,46 +14,53 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-CardEntity _$CardFromJson(Map<String, dynamic> json) {
+CardEntity _$CardEntityFromJson(Map<String, dynamic> json) {
   return _Card.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Card {
+mixin _$CardEntity {
   String get id => throw _privateConstructorUsedError;
   String get cardNumber => throw _privateConstructorUsedError;
   String get cardType => throw _privateConstructorUsedError;
   String get expirationDate => throw _privateConstructorUsedError;
   String get assetPath => throw _privateConstructorUsedError;
 
-  /// Serializes this Card to a JSON map.
+  /// Serializes this CardEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of Card
+  /// Create a copy of CardEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CardCopyWith<CardEntity> get copyWith => throw _privateConstructorUsedError;
+  $CardEntityCopyWith<CardEntity> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CardCopyWith<$Res> {
-  factory $CardCopyWith(CardEntity value, $Res Function(CardEntity) then) =
-      _$CardCopyWithImpl<$Res, CardEntity>;
+abstract class $CardEntityCopyWith<$Res> {
+  factory $CardEntityCopyWith(
+          CardEntity value, $Res Function(CardEntity) then) =
+      _$CardEntityCopyWithImpl<$Res, CardEntity>;
   @useResult
   $Res call(
-      {String id, String cardNumber, String cardType, String expirationDate, String assetPath});
+      {String id,
+      String cardNumber,
+      String cardType,
+      String expirationDate,
+      String assetPath});
 }
 
 /// @nodoc
-class _$CardCopyWithImpl<$Res, $Val extends CardEntity> implements $CardCopyWith<$Res> {
-  _$CardCopyWithImpl(this._value, this._then);
+class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
+    implements $CardEntityCopyWith<$Res> {
+  _$CardEntityCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Card
+  /// Create a copy of CardEntity
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -90,22 +97,28 @@ class _$CardCopyWithImpl<$Res, $Val extends CardEntity> implements $CardCopyWith
 }
 
 /// @nodoc
-abstract class _$$CardImplCopyWith<$Res> implements $CardCopyWith<$Res> {
-  factory _$$CardImplCopyWith(_$CardImpl value, $Res Function(_$CardImpl) then) =
+abstract class _$$CardImplCopyWith<$Res> implements $CardEntityCopyWith<$Res> {
+  factory _$$CardImplCopyWith(
+          _$CardImpl value, $Res Function(_$CardImpl) then) =
       __$$CardImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String id, String cardNumber, String cardType, String expirationDate, String assetPath});
+      {String id,
+      String cardNumber,
+      String cardType,
+      String expirationDate,
+      String assetPath});
 }
 
 /// @nodoc
-class __$$CardImplCopyWithImpl<$Res> extends _$CardCopyWithImpl<$Res, _$CardImpl>
+class __$$CardImplCopyWithImpl<$Res>
+    extends _$CardEntityCopyWithImpl<$Res, _$CardImpl>
     implements _$$CardImplCopyWith<$Res> {
   __$$CardImplCopyWithImpl(_$CardImpl _value, $Res Function(_$CardImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Card
+  /// Create a copy of CardEntity
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -151,7 +164,8 @@ class _$CardImpl implements _Card {
       required this.expirationDate,
       required this.assetPath});
 
-  factory _$CardImpl.fromJson(Map<String, dynamic> json) => _$$CardImplFromJson(json);
+  factory _$CardImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CardImplFromJson(json);
 
   @override
   final String id;
@@ -166,7 +180,7 @@ class _$CardImpl implements _Card {
 
   @override
   String toString() {
-    return 'Card(id: $id, cardNumber: $cardNumber, cardType: $cardType, expirationDate: $expirationDate, assetPath: $assetPath)';
+    return 'CardEntity(id: $id, cardNumber: $cardNumber, cardType: $cardType, expirationDate: $expirationDate, assetPath: $assetPath)';
   }
 
   @override
@@ -175,18 +189,22 @@ class _$CardImpl implements _Card {
         (other.runtimeType == runtimeType &&
             other is _$CardImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber) &&
-            (identical(other.cardType, cardType) || other.cardType == cardType) &&
+            (identical(other.cardNumber, cardNumber) ||
+                other.cardNumber == cardNumber) &&
+            (identical(other.cardType, cardType) ||
+                other.cardType == cardType) &&
             (identical(other.expirationDate, expirationDate) ||
                 other.expirationDate == expirationDate) &&
-            (identical(other.assetPath, assetPath) || other.assetPath == assetPath));
+            (identical(other.assetPath, assetPath) ||
+                other.assetPath == assetPath));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, cardNumber, cardType, expirationDate, assetPath);
+  int get hashCode => Object.hash(
+      runtimeType, id, cardNumber, cardType, expirationDate, assetPath);
 
-  /// Create a copy of Card
+  /// Create a copy of CardEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -223,9 +241,10 @@ abstract class _Card implements CardEntity {
   @override
   String get assetPath;
 
-  /// Create a copy of Card
+  /// Create a copy of CardEntity
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CardImplCopyWith<_$CardImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CardImplCopyWith<_$CardImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

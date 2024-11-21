@@ -4,7 +4,7 @@ part 'cards_entity.freezed.dart';
 part 'cards_entity.g.dart';
 
 @freezed
-class CardEntity with _$Card {
+class CardEntity with _$CardEntity {
   const factory CardEntity({
     required String id,
     required String cardNumber,
@@ -13,5 +13,5 @@ class CardEntity with _$Card {
     required String assetPath,
   }) = _Card;
 
-  factory CardEntity.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
+  factory CardEntity.fromJson(Map<String, dynamic> json) => _$CardEntityFromJson(json);
 }
