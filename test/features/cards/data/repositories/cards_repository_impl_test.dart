@@ -8,12 +8,18 @@ import 'package:sentinal/features/cards/data/models/card_model.dart';
 import 'package:sentinal/features/cards/data/repositories/cards_repository_impl.dart';
 import 'package:sentinal/features/cards/domain/entities/cards_entity.dart';
 import 'package:sentinal/features/cards/domain/repositories/cards_repository.dart';
+import 'package:sentinal/features/cards/domain/usecases/add_card_usecase.dart';
+import 'package:sentinal/features/cards/domain/usecases/delete_card_usecase.dart';
+import 'package:sentinal/features/cards/domain/usecases/get_cards_usecase.dart';
 
 import 'cards_repository_impl_test.mocks.dart';
 
 @GenerateMocks([
   LocalCardDataSource,
   CardsRepository,
+  GetCardsUsecase,
+  AddCardUseCase,
+  DeleteCardUseCase,
 ])
 void main() {
   late MockLocalCardDataSource mockLocalCardDataSource;
