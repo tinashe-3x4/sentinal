@@ -54,13 +54,13 @@ class MockCards extends _i1.Mock implements _i3.Cards {
   }
 
   @override
-  _i2.Column<String> get id => (super.noSuchMethod(
+  _i2.Column<int> get id => (super.noSuchMethod(
         Invocation.getter(#id),
-        returnValue: _FakeColumn_0<String>(
+        returnValue: _FakeColumn_0<int>(
           this,
           Invocation.getter(#id),
         ),
-      ) as _i2.Column<String>);
+      ) as _i2.Column<int>);
 
   @override
   _i2.Column<String> get cardNumber => (super.noSuchMethod(
@@ -97,12 +97,6 @@ class MockCards extends _i1.Mock implements _i3.Cards {
           Invocation.getter(#assetPath),
         ),
       ) as _i2.Column<String>);
-
-  @override
-  Set<_i2.Column<Object>> get primaryKey => (super.noSuchMethod(
-        Invocation.getter(#primaryKey),
-        returnValue: <_i2.Column<Object>>{},
-      ) as Set<_i2.Column<Object>>);
 
   @override
   bool get withoutRowId => (super.noSuchMethod(

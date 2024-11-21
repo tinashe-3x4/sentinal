@@ -1,3 +1,4 @@
-abstract class Failure {}
-
-class DatabaseFailure extends Failure {}
+abstract class Failure {
+  const Failure(this.message);
+  final String message;
+}

@@ -1,8 +1,12 @@
 import 'package:sentinal/features/cards/data/models/card_model.dart';
 
 abstract class LocalCardDataSource {
-  Future<void> addCard(CardModel cardModel);
+  Future<int> addCard({
+    required String cardNumber,
+    required String cardType,
+    required String expirationDate,
+    required String assetPath,
+  });
   Future<List<CardModel>> getCards();
-  Future<void> deleteCard(String id);
-  Future<void> updateCard(CardModel cardModel);
+  Future<void> deleteCard(int id);
 }

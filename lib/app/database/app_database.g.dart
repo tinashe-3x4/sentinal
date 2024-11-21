@@ -10,9 +10,13 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
   $CardsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _cardNumberMeta =
       const VerificationMeta('cardNumber');
   @override
@@ -52,8 +56,6 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('card_number')) {
       context.handle(
@@ -93,7 +95,7 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Card(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       cardNumber: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}card_number'])!,
       cardType: attachedDatabase.typeMapping
@@ -112,7 +114,7 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
 }
 
 class Card extends DataClass implements Insertable<Card> {
-  final String id;
+  final int id;
   final String cardNumber;
   final String cardType;
   final String expirationDate;
@@ -126,7 +128,7 @@ class Card extends DataClass implements Insertable<Card> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
+    map['id'] = Variable<int>(id);
     map['card_number'] = Variable<String>(cardNumber);
     map['card_type'] = Variable<String>(cardType);
     map['expiration_date'] = Variable<String>(expirationDate);
@@ -148,7 +150,7 @@ class Card extends DataClass implements Insertable<Card> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Card(
-      id: serializer.fromJson<String>(json['id']),
+      id: serializer.fromJson<int>(json['id']),
       cardNumber: serializer.fromJson<String>(json['cardNumber']),
       cardType: serializer.fromJson<String>(json['cardType']),
       expirationDate: serializer.fromJson<String>(json['expirationDate']),
@@ -159,7 +161,7 @@ class Card extends DataClass implements Insertable<Card> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
+      'id': serializer.toJson<int>(id),
       'cardNumber': serializer.toJson<String>(cardNumber),
       'cardType': serializer.toJson<String>(cardType),
       'expirationDate': serializer.toJson<String>(expirationDate),
@@ -168,7 +170,7 @@ class Card extends DataClass implements Insertable<Card> {
   }
 
   Card copyWith(
-          {String? id,
+          {int? id,
           String? cardNumber,
           String? cardType,
           String? expirationDate,
@@ -220,39 +222,34 @@ class Card extends DataClass implements Insertable<Card> {
 }
 
 class CardsCompanion extends UpdateCompanion<Card> {
-  final Value<String> id;
+  final Value<int> id;
   final Value<String> cardNumber;
   final Value<String> cardType;
   final Value<String> expirationDate;
   final Value<String> assetPath;
-  final Value<int> rowid;
   const CardsCompanion({
     this.id = const Value.absent(),
     this.cardNumber = const Value.absent(),
     this.cardType = const Value.absent(),
     this.expirationDate = const Value.absent(),
     this.assetPath = const Value.absent(),
-    this.rowid = const Value.absent(),
   });
   CardsCompanion.insert({
-    required String id,
+    this.id = const Value.absent(),
     required String cardNumber,
     required String cardType,
     required String expirationDate,
     required String assetPath,
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        cardNumber = Value(cardNumber),
+  })  : cardNumber = Value(cardNumber),
         cardType = Value(cardType),
         expirationDate = Value(expirationDate),
         assetPath = Value(assetPath);
   static Insertable<Card> custom({
-    Expression<String>? id,
+    Expression<int>? id,
     Expression<String>? cardNumber,
     Expression<String>? cardType,
     Expression<String>? expirationDate,
     Expression<String>? assetPath,
-    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -260,24 +257,21 @@ class CardsCompanion extends UpdateCompanion<Card> {
       if (cardType != null) 'card_type': cardType,
       if (expirationDate != null) 'expiration_date': expirationDate,
       if (assetPath != null) 'asset_path': assetPath,
-      if (rowid != null) 'rowid': rowid,
     });
   }
 
   CardsCompanion copyWith(
-      {Value<String>? id,
+      {Value<int>? id,
       Value<String>? cardNumber,
       Value<String>? cardType,
       Value<String>? expirationDate,
-      Value<String>? assetPath,
-      Value<int>? rowid}) {
+      Value<String>? assetPath}) {
     return CardsCompanion(
       id: id ?? this.id,
       cardNumber: cardNumber ?? this.cardNumber,
       cardType: cardType ?? this.cardType,
       expirationDate: expirationDate ?? this.expirationDate,
       assetPath: assetPath ?? this.assetPath,
-      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -285,7 +279,7 @@ class CardsCompanion extends UpdateCompanion<Card> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<String>(id.value);
+      map['id'] = Variable<int>(id.value);
     }
     if (cardNumber.present) {
       map['card_number'] = Variable<String>(cardNumber.value);
@@ -299,9 +293,6 @@ class CardsCompanion extends UpdateCompanion<Card> {
     if (assetPath.present) {
       map['asset_path'] = Variable<String>(assetPath.value);
     }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
     return map;
   }
 
@@ -312,8 +303,7 @@ class CardsCompanion extends UpdateCompanion<Card> {
           ..write('cardNumber: $cardNumber, ')
           ..write('cardType: $cardType, ')
           ..write('expirationDate: $expirationDate, ')
-          ..write('assetPath: $assetPath, ')
-          ..write('rowid: $rowid')
+          ..write('assetPath: $assetPath')
           ..write(')'))
         .toString();
   }
@@ -331,20 +321,18 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 }
 
 typedef $$CardsTableCreateCompanionBuilder = CardsCompanion Function({
-  required String id,
+  Value<int> id,
   required String cardNumber,
   required String cardType,
   required String expirationDate,
   required String assetPath,
-  Value<int> rowid,
 });
 typedef $$CardsTableUpdateCompanionBuilder = CardsCompanion Function({
-  Value<String> id,
+  Value<int> id,
   Value<String> cardNumber,
   Value<String> cardType,
   Value<String> expirationDate,
   Value<String> assetPath,
-  Value<int> rowid,
 });
 
 class $$CardsTableFilterComposer extends Composer<_$AppDatabase, $CardsTable> {
@@ -355,7 +343,7 @@ class $$CardsTableFilterComposer extends Composer<_$AppDatabase, $CardsTable> {
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get id => $composableBuilder(
+  ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get cardNumber => $composableBuilder(
@@ -381,7 +369,7 @@ class $$CardsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get id => $composableBuilder(
+  ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get cardNumber => $composableBuilder(
@@ -407,7 +395,7 @@ class $$CardsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get id =>
+  GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
   GeneratedColumn<String> get cardNumber => $composableBuilder(
@@ -446,12 +434,11 @@ class $$CardsTableTableManager extends RootTableManager<
           createComputedFieldComposer: () =>
               $$CardsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
+            Value<int> id = const Value.absent(),
             Value<String> cardNumber = const Value.absent(),
             Value<String> cardType = const Value.absent(),
             Value<String> expirationDate = const Value.absent(),
             Value<String> assetPath = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
           }) =>
               CardsCompanion(
             id: id,
@@ -459,15 +446,13 @@ class $$CardsTableTableManager extends RootTableManager<
             cardType: cardType,
             expirationDate: expirationDate,
             assetPath: assetPath,
-            rowid: rowid,
           ),
           createCompanionCallback: ({
-            required String id,
+            Value<int> id = const Value.absent(),
             required String cardNumber,
             required String cardType,
             required String expirationDate,
             required String assetPath,
-            Value<int> rowid = const Value.absent(),
           }) =>
               CardsCompanion.insert(
             id: id,
@@ -475,7 +460,6 @@ class $$CardsTableTableManager extends RootTableManager<
             cardType: cardType,
             expirationDate: expirationDate,
             assetPath: assetPath,
-            rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

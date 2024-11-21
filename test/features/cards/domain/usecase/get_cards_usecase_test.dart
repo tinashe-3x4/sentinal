@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:sentinal/app/errors/database_failure.dart';
 import 'package:sentinal/app/errors/failure.dart';
 import 'package:sentinal/features/cards/domain/entities/cards_entity.dart';
 import 'package:sentinal/features/cards/domain/repositories/cards_repository.dart';
@@ -25,14 +26,14 @@ void main() {
     // Arrange
     final testCards = [
       const CardEntity(
-        id: '1',
+        id: 1,
         cardNumber: '1234 5678 9012 3456',
         cardType: 'Visa',
         expirationDate: '12/23',
         assetPath: 'assets/cards/visa.png',
       ),
       const CardEntity(
-        id: '2',
+        id: 2,
         cardNumber: '9876 5432 1098 7654',
         cardType: 'MasterCard',
         expirationDate: '11/24',
@@ -53,7 +54,7 @@ void main() {
 
   test('returns Failure when repository fails', () async {
     // Arrange
-    final testFailure = DatabaseFailure();
+    final testFailure = DatabaseInvalidDataFailure('');
     when(mockCardsRepository.getCards()).thenAnswer((_) async => Left(testFailure));
 
     // Act

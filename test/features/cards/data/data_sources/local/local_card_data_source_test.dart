@@ -25,90 +25,82 @@ void main() {
 
   test('addCard should insert a card into the database', () async {
     const cardModel = CardModel(
-      id: '1',
+      id: 1,
       cardNumber: '1234 5678 9012 3456',
       cardType: 'Visa',
       expirationDate: '12/25',
       assetPath: 'assets/cards/visa.png',
     );
 
-    await dataSource.addCard(cardModel);
+    await dataSource.addCard(
+      cardNumber: cardModel.cardNumber,
+      cardType: cardModel.cardType,
+      expirationDate: cardModel.expirationDate,
+      assetPath: cardModel.assetPath,
+    );
 
     final cards = await dataSource.getCards();
 
     expect(cards, isNotEmpty);
-    expect(cards.first.id, equals('1'));
-    expect(cards.first.cardNumber, equals('1234 5678 9012 3456'));
+    expect(cards.first.cardNumber, equals(cardModel.cardNumber));
   });
 
   test('getAllCards should return all cards from the database', () async {
     const card1 = CardModel(
-      id: '1',
+      id: 1,
       cardNumber: '1234 5678 9012 3456',
       cardType: 'Visa',
       expirationDate: '12/25',
       assetPath: 'assets/cards/visa.png',
     );
     const card2 = CardModel(
-      id: '2',
+      id: 2,
       cardNumber: '9876 5432 1098 7654',
       cardType: 'MasterCard',
       expirationDate: '11/24',
       assetPath: 'assets/cards/mastercard.png',
     );
 
-    await dataSource.addCard(card1);
-    await dataSource.addCard(card2);
+    await dataSource.addCard(
+      cardNumber: card1.cardNumber,
+      cardType: card1.cardType,
+      expirationDate: card1.expirationDate,
+      assetPath: card1.assetPath,
+    );
 
-    final cards = await dataSource.getCards();
+    await dataSource.addCard(
+      cardNumber: card2.cardNumber,
+      cardType: card2.cardType,
+      expirationDate: card2.expirationDate,
+      assetPath: card2.assetPath,
+    );
 
-    expect(cards.length, equals(2));
-    expect(cards.map((card) => card.id), containsAll(['1', '2']));
+    final insertedCards = await dataSource.getCards();
+
+    expect(insertedCards.length, equals(2));
+    expect(insertedCards.last.cardNumber, card2.cardNumber);
   });
 
   test('deleteCard should remove a card from the database', () async {
     const cardModel = CardModel(
-      id: '1',
+      id: 1,
       cardNumber: '1234 5678 9012 3456',
       cardType: 'Visa',
       expirationDate: '12/25',
       assetPath: 'assets/cards/visa.png',
     );
 
-    await dataSource.addCard(cardModel);
+    final id = await dataSource.addCard(
+      cardNumber: cardModel.cardNumber,
+      cardType: cardModel.cardType,
+      expirationDate: cardModel.expirationDate,
+      assetPath: cardModel.assetPath,
+    );
 
-    await dataSource.deleteCard('1');
+    await dataSource.deleteCard(id);
 
     final cards = await dataSource.getCards();
 
     expect(cards, isEmpty);
-  });
-
-  test('updateCard should update a card in the database', () async {
-    const cardModel = CardModel(
-      id: '1',
-      cardNumber: '1234 5678 9012 3456',
-      cardType: 'Visa',
-      expirationDate: '12/25',
-      assetPath: 'assets/cards/visa.png',
-    );
-
-    await dataSource.addCard(cardModel);
-
-    const updatedCardModel = CardModel(
-      id: '1',
-      cardNumber: '1111 2222 3333 4444',
-      cardType: 'Visa',
-      expirationDate: '01/26',
-      assetPath: 'assets/cards/visa_new.png',
-    );
-
-    await dataSource.updateCard(updatedCardModel);
-
-    final cards = await dataSource.getCards();
-
-    expect(cards.first.cardNumber, equals('1111 2222 3333 4444'));
-    expect(cards.first.expirationDate, equals('01/26'));
-    expect(cards.first.assetPath, equals('assets/cards/visa_new.png'));
   });
 }

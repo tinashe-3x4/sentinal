@@ -4,7 +4,7 @@ import 'package:sentinal/features/cards/domain/entities/cards_entity.dart';
 
 void main() {
   const testCardModel = CardModel(
-    id: '1',
+    id: 1,
     cardNumber: '1234 5678 9012 3456',
     cardType: 'Visa',
     expirationDate: '12/23',

@@ -8,16 +8,20 @@ class LocalCardDataSourceImpl extends LocalCardDataSource {
   final AppDatabase _db;
 
   @override
-  Future<void> addCard(CardModel cardModel) async {
+  Future<int> addCard({
+    required String cardNumber,
+    required String cardType,
+    required String expirationDate,
+    required String assetPath,
+  }) async {
     final card = CardsCompanion(
-      id: Value(cardModel.id),
-      cardNumber: Value(cardModel.cardNumber),
-      cardType: Value(cardModel.cardType),
-      expirationDate: Value(cardModel.expirationDate),
-      assetPath: Value(cardModel.assetPath),
+      cardNumber: Value(cardNumber),
+      cardType: Value(cardType),
+      expirationDate: Value(expirationDate),
+      assetPath: Value(assetPath),
     );
 
-    await _db.into(_db.cards).insert(card);
+    return _db.into(_db.cards).insert(card);
   }
 
   @override
@@ -37,20 +41,7 @@ class LocalCardDataSourceImpl extends LocalCardDataSource {
   }
 
   @override
-  Future<void> deleteCard(String id) async {
+  Future<void> deleteCard(int id) async {
     await (_db.delete(_db.cards)..where((tbl) => tbl.id.equals(id))).go();
-  }
-
-  @override
-  Future<void> updateCard(CardModel cardModel) async {
-    final card = CardsCompanion(
-      id: Value(cardModel.id),
-      cardNumber: Value(cardModel.cardNumber),
-      cardType: Value(cardModel.cardType),
-      expirationDate: Value(cardModel.expirationDate),
-      assetPath: Value(cardModel.assetPath),
-    );
-
-    await (_db.update(_db.cards)..where((tbl) => tbl.id.equals(cardModel.id))).write(card);
   }
 }

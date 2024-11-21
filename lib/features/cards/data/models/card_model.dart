@@ -12,7 +12,7 @@ class CardModel extends CardEntity with EquatableMixin {
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
     return CardModel(
-      id: json['id'] as String,
+      id: json['id'] as int,
       cardNumber: json['cardNumber'] as String,
       cardType: json['cardType'] as String,
       expirationDate: json['expirationDate'] as String,

@@ -9,7 +9,7 @@ class CardEntity extends Equatable {
     required this.assetPath,
   });
 
-  final String id;
+  final int id;
   final String cardNumber;
   final String cardType;
   final String expirationDate;

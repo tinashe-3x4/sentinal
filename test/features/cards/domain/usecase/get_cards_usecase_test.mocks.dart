@@ -54,20 +54,53 @@ class MockCardsRepository extends _i1.Mock implements _i2.CardsRepository {
       ) as _i3.Future<_i4.Either<_i5.Failure, List<_i6.CardEntity>>>);
 
   @override
-  _i3.Future<_i4.Either<_i5.Failure, _i6.CardEntity>> createCard(
-          _i6.CardEntity? card) =>
+  _i3.Future<_i4.Either<_i5.Failure, int>> addCard({
+    required String? cardNumber,
+    required String? cardType,
+    required String? expirationDate,
+    required String? assetPath,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #createCard,
-          [card],
+          #addCard,
+          [],
+          {
+            #cardNumber: cardNumber,
+            #cardType: cardType,
+            #expirationDate: expirationDate,
+            #assetPath: assetPath,
+          },
         ),
-        returnValue: _i3.Future<_i4.Either<_i5.Failure, _i6.CardEntity>>.value(
-            _i7.dummyValue<_i4.Either<_i5.Failure, _i6.CardEntity>>(
+        returnValue: _i3.Future<_i4.Either<_i5.Failure, int>>.value(
+            _i7.dummyValue<_i4.Either<_i5.Failure, int>>(
           this,
           Invocation.method(
-            #createCard,
-            [card],
+            #addCard,
+            [],
+            {
+              #cardNumber: cardNumber,
+              #cardType: cardType,
+              #expirationDate: expirationDate,
+              #assetPath: assetPath,
+            },
           ),
         )),
-      ) as _i3.Future<_i4.Either<_i5.Failure, _i6.CardEntity>>);
+      ) as _i3.Future<_i4.Either<_i5.Failure, int>>);
+
+  @override
+  _i3.Future<_i4.Either<_i5.Failure, _i4.Unit>> deleteCard(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteCard,
+          [id],
+        ),
+        returnValue: _i3.Future<_i4.Either<_i5.Failure, _i4.Unit>>.value(
+            _i7.dummyValue<_i4.Either<_i5.Failure, _i4.Unit>>(
+          this,
+          Invocation.method(
+            #deleteCard,
+            [id],
+          ),
+        )),
+      ) as _i3.Future<_i4.Either<_i5.Failure, _i4.Unit>>);
 }
