@@ -1,17 +1,26 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-part 'cards_entity.freezed.dart';
-part 'cards_entity.g.dart';
+class CardEntity extends Equatable {
+  const CardEntity({
+    required this.id,
+    required this.cardNumber,
+    required this.cardType,
+    required this.expirationDate,
+    required this.assetPath,
+  });
 
-@freezed
-class CardEntity with _$CardEntity {
-  const factory CardEntity({
-    required String id,
-    required String cardNumber,
-    required String cardType,
-    required String expirationDate,
-    required String assetPath,
-  }) = _Card;
+  final String id;
+  final String cardNumber;
+  final String cardType;
+  final String expirationDate;
+  final String assetPath;
 
-  factory CardEntity.fromJson(Map<String, dynamic> json) => _$CardEntityFromJson(json);
+  @override
+  List<Object?> get props => [
+        id,
+        cardNumber,
+        cardType,
+        expirationDate,
+        assetPath,
+      ];
 }
