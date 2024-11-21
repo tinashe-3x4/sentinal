@@ -3,19 +3,25 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
 import 'package:fpdart/fpdart.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i9;
 import 'package:sentinal/app/errors/failure.dart' as _i7;
 import 'package:sentinal/features/cards/data/data_sources/local/local_card_data_source.dart'
-    as _i2;
-import 'package:sentinal/features/cards/data/models/card_model.dart' as _i4;
+    as _i3;
+import 'package:sentinal/features/cards/data/models/card_model.dart' as _i5;
 import 'package:sentinal/features/cards/domain/entities/cards_entity.dart'
     as _i8;
 import 'package:sentinal/features/cards/domain/repositories/cards_repository.dart'
-    as _i5;
+    as _i2;
+import 'package:sentinal/features/cards/domain/usecases/add_card_usecase.dart'
+    as _i11;
+import 'package:sentinal/features/cards/domain/usecases/delete_card_usecase.dart'
+    as _i12;
+import 'package:sentinal/features/cards/domain/usecases/get_cards_usecase.dart'
+    as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -30,17 +36,28 @@ import 'package:sentinal/features/cards/domain/repositories/cards_repository.dar
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeCardsRepository_0 extends _i1.SmartFake
+    implements _i2.CardsRepository {
+  _FakeCardsRepository_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [LocalCardDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockLocalCardDataSource extends _i1.Mock
-    implements _i2.LocalCardDataSource {
+    implements _i3.LocalCardDataSource {
   MockLocalCardDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<int> addCard({
+  _i4.Future<int> addCard({
     required String? cardNumber,
     required String? cardType,
     required String? expirationDate,
@@ -57,46 +74,46 @@ class MockLocalCardDataSource extends _i1.Mock
             #assetPath: assetPath,
           },
         ),
-        returnValue: _i3.Future<int>.value(0),
-      ) as _i3.Future<int>);
+        returnValue: _i4.Future<int>.value(0),
+      ) as _i4.Future<int>);
 
   @override
-  _i3.Future<List<_i4.CardModel>> getCards() => (super.noSuchMethod(
+  _i4.Future<List<_i5.CardModel>> getCards() => (super.noSuchMethod(
         Invocation.method(
           #getCards,
           [],
         ),
-        returnValue: _i3.Future<List<_i4.CardModel>>.value(<_i4.CardModel>[]),
-      ) as _i3.Future<List<_i4.CardModel>>);
+        returnValue: _i4.Future<List<_i5.CardModel>>.value(<_i5.CardModel>[]),
+      ) as _i4.Future<List<_i5.CardModel>>);
 
   @override
-  _i3.Future<void> deleteCard(int? id) => (super.noSuchMethod(
+  _i4.Future<void> deleteCard(int? id) => (super.noSuchMethod(
         Invocation.method(
           #deleteCard,
           [id],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [CardsRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCardsRepository extends _i1.Mock implements _i5.CardsRepository {
+class MockCardsRepository extends _i1.Mock implements _i2.CardsRepository {
   MockCardsRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>> getCards() =>
+  _i4.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>> getCards() =>
       (super.noSuchMethod(
         Invocation.method(
           #getCards,
           [],
         ),
         returnValue:
-            _i3.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>>.value(
+            _i4.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>>.value(
                 _i9.dummyValue<_i6.Either<_i7.Failure, List<_i8.CardEntity>>>(
           this,
           Invocation.method(
@@ -104,10 +121,10 @@ class MockCardsRepository extends _i1.Mock implements _i5.CardsRepository {
             [],
           ),
         )),
-      ) as _i3.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>>);
+      ) as _i4.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>>);
 
   @override
-  _i3.Future<_i6.Either<_i7.Failure, int>> addCard({
+  _i4.Future<_i6.Either<_i7.Failure, int>> addCard({
     required String? cardNumber,
     required String? cardType,
     required String? expirationDate,
@@ -124,7 +141,7 @@ class MockCardsRepository extends _i1.Mock implements _i5.CardsRepository {
             #assetPath: assetPath,
           },
         ),
-        returnValue: _i3.Future<_i6.Either<_i7.Failure, int>>.value(
+        returnValue: _i4.Future<_i6.Either<_i7.Failure, int>>.value(
             _i9.dummyValue<_i6.Either<_i7.Failure, int>>(
           this,
           Invocation.method(
@@ -138,16 +155,16 @@ class MockCardsRepository extends _i1.Mock implements _i5.CardsRepository {
             },
           ),
         )),
-      ) as _i3.Future<_i6.Either<_i7.Failure, int>>);
+      ) as _i4.Future<_i6.Either<_i7.Failure, int>>);
 
   @override
-  _i3.Future<_i6.Either<_i7.Failure, _i6.Unit>> deleteCard(int? id) =>
+  _i4.Future<_i6.Either<_i7.Failure, _i6.Unit>> deleteCard(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #deleteCard,
           [id],
         ),
-        returnValue: _i3.Future<_i6.Either<_i7.Failure, _i6.Unit>>.value(
+        returnValue: _i4.Future<_i6.Either<_i7.Failure, _i6.Unit>>.value(
             _i9.dummyValue<_i6.Either<_i7.Failure, _i6.Unit>>(
           this,
           Invocation.method(
@@ -155,5 +172,119 @@ class MockCardsRepository extends _i1.Mock implements _i5.CardsRepository {
             [id],
           ),
         )),
-      ) as _i3.Future<_i6.Either<_i7.Failure, _i6.Unit>>);
+      ) as _i4.Future<_i6.Either<_i7.Failure, _i6.Unit>>);
+}
+
+/// A class which mocks [GetCardsUsecase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetCardsUsecase extends _i1.Mock implements _i10.GetCardsUsecase {
+  MockGetCardsUsecase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>> execute() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [],
+        ),
+        returnValue:
+            _i4.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>>.value(
+                _i9.dummyValue<_i6.Either<_i7.Failure, List<_i8.CardEntity>>>(
+          this,
+          Invocation.method(
+            #execute,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i6.Either<_i7.Failure, List<_i8.CardEntity>>>);
+}
+
+/// A class which mocks [AddCardUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAddCardUseCase extends _i1.Mock implements _i11.AddCardUseCase {
+  MockAddCardUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.CardsRepository get repository => (super.noSuchMethod(
+        Invocation.getter(#repository),
+        returnValue: _FakeCardsRepository_0(
+          this,
+          Invocation.getter(#repository),
+        ),
+      ) as _i2.CardsRepository);
+
+  @override
+  _i4.Future<_i6.Either<_i7.Failure, int>> execute({
+    required String? cardNumber,
+    required String? cardType,
+    required String? expirationDate,
+    required String? assetPath,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [],
+          {
+            #cardNumber: cardNumber,
+            #cardType: cardType,
+            #expirationDate: expirationDate,
+            #assetPath: assetPath,
+          },
+        ),
+        returnValue: _i4.Future<_i6.Either<_i7.Failure, int>>.value(
+            _i9.dummyValue<_i6.Either<_i7.Failure, int>>(
+          this,
+          Invocation.method(
+            #execute,
+            [],
+            {
+              #cardNumber: cardNumber,
+              #cardType: cardType,
+              #expirationDate: expirationDate,
+              #assetPath: assetPath,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i6.Either<_i7.Failure, int>>);
+}
+
+/// A class which mocks [DeleteCardUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDeleteCardUseCase extends _i1.Mock implements _i12.DeleteCardUseCase {
+  MockDeleteCardUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.CardsRepository get repository => (super.noSuchMethod(
+        Invocation.getter(#repository),
+        returnValue: _FakeCardsRepository_0(
+          this,
+          Invocation.getter(#repository),
+        ),
+      ) as _i2.CardsRepository);
+
+  @override
+  _i4.Future<_i6.Either<_i7.Failure, _i6.Unit>> execute(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [id],
+        ),
+        returnValue: _i4.Future<_i6.Either<_i7.Failure, _i6.Unit>>.value(
+            _i9.dummyValue<_i6.Either<_i7.Failure, _i6.Unit>>(
+          this,
+          Invocation.method(
+            #execute,
+            [id],
+          ),
+        )),
+      ) as _i4.Future<_i6.Either<_i7.Failure, _i6.Unit>>);
 }
