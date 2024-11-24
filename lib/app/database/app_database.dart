@@ -1,26 +1,25 @@
-import 'dart:io';
-
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:drift_flutter/drift_flutter.dart';
 import 'package:sentinal/app/database/tables/cards_table.dart';
 
 part 'app_database.g.dart';
 
 @DriftDatabase(tables: [Cards])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+  AppDatabase()
+      : super(
+          driftDatabase(
+            name: 'sentinal-app',
+            web: DriftWebOptions(
+              sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+              driftWorker: Uri.parse('drift_worker.js'),
+              onResult: (_) {},
+            ),
+          ),
+        );
 
-  AppDatabase.forTesting(super.e);
+  AppDatabase.forTesting(DatabaseConnection super.connection);
 
   @override
   int get schemaVersion => 1;
-}
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File('${dbFolder.path}/app.db');
-    return NativeDatabase(file);
-  });
 }

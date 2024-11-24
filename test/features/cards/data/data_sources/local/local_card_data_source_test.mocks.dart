@@ -90,11 +90,29 @@ class MockCards extends _i1.Mock implements _i3.Cards {
       ) as _i2.Column<String>);
 
   @override
-  _i2.Column<String> get assetPath => (super.noSuchMethod(
-        Invocation.getter(#assetPath),
+  _i2.Column<String> get cardHolderName => (super.noSuchMethod(
+        Invocation.getter(#cardHolderName),
         returnValue: _FakeColumn_0<String>(
           this,
-          Invocation.getter(#assetPath),
+          Invocation.getter(#cardHolderName),
+        ),
+      ) as _i2.Column<String>);
+
+  @override
+  _i2.Column<String> get cvv => (super.noSuchMethod(
+        Invocation.getter(#cvv),
+        returnValue: _FakeColumn_0<String>(
+          this,
+          Invocation.getter(#cvv),
+        ),
+      ) as _i2.Column<String>);
+
+  @override
+  _i2.Column<String> get issuedCountry => (super.noSuchMethod(
+        Invocation.getter(#issuedCountry),
+        returnValue: _FakeColumn_0<String>(
+          this,
+          Invocation.getter(#issuedCountry),
         ),
       ) as _i2.Column<String>);
 

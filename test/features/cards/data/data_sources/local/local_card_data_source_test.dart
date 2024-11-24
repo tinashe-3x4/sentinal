@@ -24,19 +24,19 @@ void main() {
   });
 
   test('addCard should insert a card into the database', () async {
-    const cardModel = CardModel(
+    final cardModel = CardModel(
       id: 1,
       cardNumber: '1234 5678 9012 3456',
       cardType: 'Visa',
       expirationDate: '12/25',
-      assetPath: 'assets/cards/visa.png',
+      cardHolderName: 'Joe Riga',
     );
 
     await dataSource.addCard(
       cardNumber: cardModel.cardNumber,
       cardType: cardModel.cardType,
       expirationDate: cardModel.expirationDate,
-      assetPath: cardModel.assetPath,
+      cardHolderName: cardModel.cardHolderName,
     );
 
     final cards = await dataSource.getCards();
@@ -51,28 +51,28 @@ void main() {
       cardNumber: '1234 5678 9012 3456',
       cardType: 'Visa',
       expirationDate: '12/25',
-      assetPath: 'assets/cards/visa.png',
+      cardHolderName: 'Joe Riga',
     );
     const card2 = CardModel(
       id: 2,
       cardNumber: '9876 5432 1098 7654',
       cardType: 'MasterCard',
       expirationDate: '11/24',
-      assetPath: 'assets/cards/mastercard.png',
+      cardHolderName: 'Joe Riga',
     );
 
     await dataSource.addCard(
       cardNumber: card1.cardNumber,
       cardType: card1.cardType,
       expirationDate: card1.expirationDate,
-      assetPath: card1.assetPath,
+      cardHolderName: card1.cardHolderName,
     );
 
     await dataSource.addCard(
       cardNumber: card2.cardNumber,
       cardType: card2.cardType,
       expirationDate: card2.expirationDate,
-      assetPath: card2.assetPath,
+      cardHolderName: card2.cardHolderName,
     );
 
     final insertedCards = await dataSource.getCards();
@@ -87,14 +87,14 @@ void main() {
       cardNumber: '1234 5678 9012 3456',
       cardType: 'Visa',
       expirationDate: '12/25',
-      assetPath: 'assets/cards/visa.png',
+      cardHolderName: 'Joe Riga',
     );
 
     final id = await dataSource.addCard(
       cardNumber: cardModel.cardNumber,
       cardType: cardModel.cardType,
       expirationDate: cardModel.expirationDate,
-      assetPath: cardModel.assetPath,
+      cardHolderName: cardModel.cardHolderName,
     );
 
     await dataSource.deleteCard(id);

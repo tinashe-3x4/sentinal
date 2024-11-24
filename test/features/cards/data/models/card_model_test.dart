@@ -8,7 +8,7 @@ void main() {
     cardNumber: '1234 5678 9012 3456',
     cardType: 'Visa',
     expirationDate: '12/23',
-    assetPath: 'assets/cards/visa.png',
+    cardHolderName: 'Joe Riga',
   );
 
   test('should be a subclass of Card Entity', () async {

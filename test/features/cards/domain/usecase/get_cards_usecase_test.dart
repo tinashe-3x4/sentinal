@@ -30,14 +30,18 @@ void main() {
         cardNumber: '1234 5678 9012 3456',
         cardType: 'Visa',
         expirationDate: '12/23',
-        assetPath: 'assets/cards/visa.png',
+        cardHolderName: 'assets/cards/visa.png',
+        cvv: '123',
+        issuedCountry: 'RSA',
       ),
       const CardEntity(
         id: 2,
         cardNumber: '9876 5432 1098 7654',
         cardType: 'MasterCard',
         expirationDate: '11/24',
-        assetPath: 'assets/cards/mastercard.png',
+        cardHolderName: 'Joe Riga',
+        cvv: '456',
+        issuedCountry: 'USA',
       ),
     ];
 

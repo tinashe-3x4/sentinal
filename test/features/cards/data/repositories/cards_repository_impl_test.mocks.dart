@@ -61,7 +61,9 @@ class MockLocalCardDataSource extends _i1.Mock
     required String? cardNumber,
     required String? cardType,
     required String? expirationDate,
-    required String? assetPath,
+    required String? cardHolderName,
+    required String? cvv,
+    required String? issuedCountry,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -71,7 +73,9 @@ class MockLocalCardDataSource extends _i1.Mock
             #cardNumber: cardNumber,
             #cardType: cardType,
             #expirationDate: expirationDate,
-            #assetPath: assetPath,
+            #cardHolderName: cardHolderName,
+            #cvv: cvv,
+            #issuedCountry: issuedCountry,
           },
         ),
         returnValue: _i4.Future<int>.value(0),
@@ -128,7 +132,7 @@ class MockCardsRepository extends _i1.Mock implements _i2.CardsRepository {
     required String? cardNumber,
     required String? cardType,
     required String? expirationDate,
-    required String? assetPath,
+    required String? cardHolderName,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -138,7 +142,7 @@ class MockCardsRepository extends _i1.Mock implements _i2.CardsRepository {
             #cardNumber: cardNumber,
             #cardType: cardType,
             #expirationDate: expirationDate,
-            #assetPath: assetPath,
+            #cardHolderName: cardHolderName,
           },
         ),
         returnValue: _i4.Future<_i6.Either<_i7.Failure, int>>.value(
@@ -151,7 +155,7 @@ class MockCardsRepository extends _i1.Mock implements _i2.CardsRepository {
               #cardNumber: cardNumber,
               #cardType: cardType,
               #expirationDate: expirationDate,
-              #assetPath: assetPath,
+              #cardHolderName: cardHolderName,
             },
           ),
         )),
@@ -224,7 +228,7 @@ class MockAddCardUseCase extends _i1.Mock implements _i11.AddCardUseCase {
     required String? cardNumber,
     required String? cardType,
     required String? expirationDate,
-    required String? assetPath,
+    required String? cardHolderName,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -234,7 +238,7 @@ class MockAddCardUseCase extends _i1.Mock implements _i11.AddCardUseCase {
             #cardNumber: cardNumber,
             #cardType: cardType,
             #expirationDate: expirationDate,
-            #assetPath: assetPath,
+            #cardHolderName: cardHolderName,
           },
         ),
         returnValue: _i4.Future<_i6.Either<_i7.Failure, int>>.value(
@@ -247,7 +251,7 @@ class MockAddCardUseCase extends _i1.Mock implements _i11.AddCardUseCase {
               #cardNumber: cardNumber,
               #cardType: cardType,
               #expirationDate: expirationDate,
-              #assetPath: assetPath,
+              #cardHolderName: cardHolderName,
             },
           ),
         )),

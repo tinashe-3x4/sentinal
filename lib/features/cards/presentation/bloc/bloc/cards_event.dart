@@ -16,15 +16,15 @@ final class AddCard extends CardsEvent {
     required this.cardNumber,
     required this.cardType,
     required this.expirationDate,
-    required this.assetPath,
+    required this.cardHolderName,
   });
   final String cardNumber;
   final String cardType;
   final String expirationDate;
-  final String assetPath;
+  final String cardHolderName;
 
   @override
-  List<Object?> get props => [cardNumber, cardType, expirationDate, assetPath];
+  List<Object?> get props => [cardNumber, cardType, expirationDate, cardHolderName];
 }
 
 final class DeleteCard extends CardsEvent {

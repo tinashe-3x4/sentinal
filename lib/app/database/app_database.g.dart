@@ -35,15 +35,33 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
   late final GeneratedColumn<String> expirationDate = GeneratedColumn<String>(
       'expiration_date', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _assetPathMeta =
-      const VerificationMeta('assetPath');
+  static const VerificationMeta _cardHolderNameMeta =
+      const VerificationMeta('cardHolderName');
   @override
-  late final GeneratedColumn<String> assetPath = GeneratedColumn<String>(
-      'asset_path', aliasedName, false,
+  late final GeneratedColumn<String> cardHolderName = GeneratedColumn<String>(
+      'card_holder_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _cvvMeta = const VerificationMeta('cvv');
+  @override
+  late final GeneratedColumn<String> cvv = GeneratedColumn<String>(
+      'cvv', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _issuedCountryMeta =
+      const VerificationMeta('issuedCountry');
+  @override
+  late final GeneratedColumn<String> issuedCountry = GeneratedColumn<String>(
+      'issued_country', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, cardNumber, cardType, expirationDate, assetPath];
+  List<GeneratedColumn> get $columns => [
+        id,
+        cardNumber,
+        cardType,
+        expirationDate,
+        cardHolderName,
+        cvv,
+        issuedCountry
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -79,11 +97,27 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
     } else if (isInserting) {
       context.missing(_expirationDateMeta);
     }
-    if (data.containsKey('asset_path')) {
-      context.handle(_assetPathMeta,
-          assetPath.isAcceptableOrUnknown(data['asset_path']!, _assetPathMeta));
+    if (data.containsKey('card_holder_name')) {
+      context.handle(
+          _cardHolderNameMeta,
+          cardHolderName.isAcceptableOrUnknown(
+              data['card_holder_name']!, _cardHolderNameMeta));
     } else if (isInserting) {
-      context.missing(_assetPathMeta);
+      context.missing(_cardHolderNameMeta);
+    }
+    if (data.containsKey('cvv')) {
+      context.handle(
+          _cvvMeta, cvv.isAcceptableOrUnknown(data['cvv']!, _cvvMeta));
+    } else if (isInserting) {
+      context.missing(_cvvMeta);
+    }
+    if (data.containsKey('issued_country')) {
+      context.handle(
+          _issuedCountryMeta,
+          issuedCountry.isAcceptableOrUnknown(
+              data['issued_country']!, _issuedCountryMeta));
+    } else if (isInserting) {
+      context.missing(_issuedCountryMeta);
     }
     return context;
   }
@@ -102,8 +136,12 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
           .read(DriftSqlType.string, data['${effectivePrefix}card_type'])!,
       expirationDate: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}expiration_date'])!,
-      assetPath: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}asset_path'])!,
+      cardHolderName: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}card_holder_name'])!,
+      cvv: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}cvv'])!,
+      issuedCountry: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}issued_country'])!,
     );
   }
 
@@ -118,13 +156,17 @@ class Card extends DataClass implements Insertable<Card> {
   final String cardNumber;
   final String cardType;
   final String expirationDate;
-  final String assetPath;
+  final String cardHolderName;
+  final String cvv;
+  final String issuedCountry;
   const Card(
       {required this.id,
       required this.cardNumber,
       required this.cardType,
       required this.expirationDate,
-      required this.assetPath});
+      required this.cardHolderName,
+      required this.cvv,
+      required this.issuedCountry});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -132,7 +174,9 @@ class Card extends DataClass implements Insertable<Card> {
     map['card_number'] = Variable<String>(cardNumber);
     map['card_type'] = Variable<String>(cardType);
     map['expiration_date'] = Variable<String>(expirationDate);
-    map['asset_path'] = Variable<String>(assetPath);
+    map['card_holder_name'] = Variable<String>(cardHolderName);
+    map['cvv'] = Variable<String>(cvv);
+    map['issued_country'] = Variable<String>(issuedCountry);
     return map;
   }
 
@@ -142,7 +186,9 @@ class Card extends DataClass implements Insertable<Card> {
       cardNumber: Value(cardNumber),
       cardType: Value(cardType),
       expirationDate: Value(expirationDate),
-      assetPath: Value(assetPath),
+      cardHolderName: Value(cardHolderName),
+      cvv: Value(cvv),
+      issuedCountry: Value(issuedCountry),
     );
   }
 
@@ -154,7 +200,9 @@ class Card extends DataClass implements Insertable<Card> {
       cardNumber: serializer.fromJson<String>(json['cardNumber']),
       cardType: serializer.fromJson<String>(json['cardType']),
       expirationDate: serializer.fromJson<String>(json['expirationDate']),
-      assetPath: serializer.fromJson<String>(json['assetPath']),
+      cardHolderName: serializer.fromJson<String>(json['cardHolderName']),
+      cvv: serializer.fromJson<String>(json['cvv']),
+      issuedCountry: serializer.fromJson<String>(json['issuedCountry']),
     );
   }
   @override
@@ -165,7 +213,9 @@ class Card extends DataClass implements Insertable<Card> {
       'cardNumber': serializer.toJson<String>(cardNumber),
       'cardType': serializer.toJson<String>(cardType),
       'expirationDate': serializer.toJson<String>(expirationDate),
-      'assetPath': serializer.toJson<String>(assetPath),
+      'cardHolderName': serializer.toJson<String>(cardHolderName),
+      'cvv': serializer.toJson<String>(cvv),
+      'issuedCountry': serializer.toJson<String>(issuedCountry),
     };
   }
 
@@ -174,13 +224,17 @@ class Card extends DataClass implements Insertable<Card> {
           String? cardNumber,
           String? cardType,
           String? expirationDate,
-          String? assetPath}) =>
+          String? cardHolderName,
+          String? cvv,
+          String? issuedCountry}) =>
       Card(
         id: id ?? this.id,
         cardNumber: cardNumber ?? this.cardNumber,
         cardType: cardType ?? this.cardType,
         expirationDate: expirationDate ?? this.expirationDate,
-        assetPath: assetPath ?? this.assetPath,
+        cardHolderName: cardHolderName ?? this.cardHolderName,
+        cvv: cvv ?? this.cvv,
+        issuedCountry: issuedCountry ?? this.issuedCountry,
       );
   Card copyWithCompanion(CardsCompanion data) {
     return Card(
@@ -191,7 +245,13 @@ class Card extends DataClass implements Insertable<Card> {
       expirationDate: data.expirationDate.present
           ? data.expirationDate.value
           : this.expirationDate,
-      assetPath: data.assetPath.present ? data.assetPath.value : this.assetPath,
+      cardHolderName: data.cardHolderName.present
+          ? data.cardHolderName.value
+          : this.cardHolderName,
+      cvv: data.cvv.present ? data.cvv.value : this.cvv,
+      issuedCountry: data.issuedCountry.present
+          ? data.issuedCountry.value
+          : this.issuedCountry,
     );
   }
 
@@ -202,14 +262,16 @@ class Card extends DataClass implements Insertable<Card> {
           ..write('cardNumber: $cardNumber, ')
           ..write('cardType: $cardType, ')
           ..write('expirationDate: $expirationDate, ')
-          ..write('assetPath: $assetPath')
+          ..write('cardHolderName: $cardHolderName, ')
+          ..write('cvv: $cvv, ')
+          ..write('issuedCountry: $issuedCountry')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, cardNumber, cardType, expirationDate, assetPath);
+  int get hashCode => Object.hash(id, cardNumber, cardType, expirationDate,
+      cardHolderName, cvv, issuedCountry);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -218,7 +280,9 @@ class Card extends DataClass implements Insertable<Card> {
           other.cardNumber == this.cardNumber &&
           other.cardType == this.cardType &&
           other.expirationDate == this.expirationDate &&
-          other.assetPath == this.assetPath);
+          other.cardHolderName == this.cardHolderName &&
+          other.cvv == this.cvv &&
+          other.issuedCountry == this.issuedCountry);
 }
 
 class CardsCompanion extends UpdateCompanion<Card> {
@@ -226,37 +290,49 @@ class CardsCompanion extends UpdateCompanion<Card> {
   final Value<String> cardNumber;
   final Value<String> cardType;
   final Value<String> expirationDate;
-  final Value<String> assetPath;
+  final Value<String> cardHolderName;
+  final Value<String> cvv;
+  final Value<String> issuedCountry;
   const CardsCompanion({
     this.id = const Value.absent(),
     this.cardNumber = const Value.absent(),
     this.cardType = const Value.absent(),
     this.expirationDate = const Value.absent(),
-    this.assetPath = const Value.absent(),
+    this.cardHolderName = const Value.absent(),
+    this.cvv = const Value.absent(),
+    this.issuedCountry = const Value.absent(),
   });
   CardsCompanion.insert({
     this.id = const Value.absent(),
     required String cardNumber,
     required String cardType,
     required String expirationDate,
-    required String assetPath,
+    required String cardHolderName,
+    required String cvv,
+    required String issuedCountry,
   })  : cardNumber = Value(cardNumber),
         cardType = Value(cardType),
         expirationDate = Value(expirationDate),
-        assetPath = Value(assetPath);
+        cardHolderName = Value(cardHolderName),
+        cvv = Value(cvv),
+        issuedCountry = Value(issuedCountry);
   static Insertable<Card> custom({
     Expression<int>? id,
     Expression<String>? cardNumber,
     Expression<String>? cardType,
     Expression<String>? expirationDate,
-    Expression<String>? assetPath,
+    Expression<String>? cardHolderName,
+    Expression<String>? cvv,
+    Expression<String>? issuedCountry,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (cardNumber != null) 'card_number': cardNumber,
       if (cardType != null) 'card_type': cardType,
       if (expirationDate != null) 'expiration_date': expirationDate,
-      if (assetPath != null) 'asset_path': assetPath,
+      if (cardHolderName != null) 'card_holder_name': cardHolderName,
+      if (cvv != null) 'cvv': cvv,
+      if (issuedCountry != null) 'issued_country': issuedCountry,
     });
   }
 
@@ -265,13 +341,17 @@ class CardsCompanion extends UpdateCompanion<Card> {
       Value<String>? cardNumber,
       Value<String>? cardType,
       Value<String>? expirationDate,
-      Value<String>? assetPath}) {
+      Value<String>? cardHolderName,
+      Value<String>? cvv,
+      Value<String>? issuedCountry}) {
     return CardsCompanion(
       id: id ?? this.id,
       cardNumber: cardNumber ?? this.cardNumber,
       cardType: cardType ?? this.cardType,
       expirationDate: expirationDate ?? this.expirationDate,
-      assetPath: assetPath ?? this.assetPath,
+      cardHolderName: cardHolderName ?? this.cardHolderName,
+      cvv: cvv ?? this.cvv,
+      issuedCountry: issuedCountry ?? this.issuedCountry,
     );
   }
 
@@ -290,8 +370,14 @@ class CardsCompanion extends UpdateCompanion<Card> {
     if (expirationDate.present) {
       map['expiration_date'] = Variable<String>(expirationDate.value);
     }
-    if (assetPath.present) {
-      map['asset_path'] = Variable<String>(assetPath.value);
+    if (cardHolderName.present) {
+      map['card_holder_name'] = Variable<String>(cardHolderName.value);
+    }
+    if (cvv.present) {
+      map['cvv'] = Variable<String>(cvv.value);
+    }
+    if (issuedCountry.present) {
+      map['issued_country'] = Variable<String>(issuedCountry.value);
     }
     return map;
   }
@@ -303,7 +389,9 @@ class CardsCompanion extends UpdateCompanion<Card> {
           ..write('cardNumber: $cardNumber, ')
           ..write('cardType: $cardType, ')
           ..write('expirationDate: $expirationDate, ')
-          ..write('assetPath: $assetPath')
+          ..write('cardHolderName: $cardHolderName, ')
+          ..write('cvv: $cvv, ')
+          ..write('issuedCountry: $issuedCountry')
           ..write(')'))
         .toString();
   }
@@ -325,14 +413,18 @@ typedef $$CardsTableCreateCompanionBuilder = CardsCompanion Function({
   required String cardNumber,
   required String cardType,
   required String expirationDate,
-  required String assetPath,
+  required String cardHolderName,
+  required String cvv,
+  required String issuedCountry,
 });
 typedef $$CardsTableUpdateCompanionBuilder = CardsCompanion Function({
   Value<int> id,
   Value<String> cardNumber,
   Value<String> cardType,
   Value<String> expirationDate,
-  Value<String> assetPath,
+  Value<String> cardHolderName,
+  Value<String> cvv,
+  Value<String> issuedCountry,
 });
 
 class $$CardsTableFilterComposer extends Composer<_$AppDatabase, $CardsTable> {
@@ -356,8 +448,15 @@ class $$CardsTableFilterComposer extends Composer<_$AppDatabase, $CardsTable> {
       column: $table.expirationDate,
       builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get assetPath => $composableBuilder(
-      column: $table.assetPath, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get cardHolderName => $composableBuilder(
+      column: $table.cardHolderName,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get cvv => $composableBuilder(
+      column: $table.cvv, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get issuedCountry => $composableBuilder(
+      column: $table.issuedCountry, builder: (column) => ColumnFilters(column));
 }
 
 class $$CardsTableOrderingComposer
@@ -382,8 +481,16 @@ class $$CardsTableOrderingComposer
       column: $table.expirationDate,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get assetPath => $composableBuilder(
-      column: $table.assetPath, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get cardHolderName => $composableBuilder(
+      column: $table.cardHolderName,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get cvv => $composableBuilder(
+      column: $table.cvv, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get issuedCountry => $composableBuilder(
+      column: $table.issuedCountry,
+      builder: (column) => ColumnOrderings(column));
 }
 
 class $$CardsTableAnnotationComposer
@@ -407,8 +514,14 @@ class $$CardsTableAnnotationComposer
   GeneratedColumn<String> get expirationDate => $composableBuilder(
       column: $table.expirationDate, builder: (column) => column);
 
-  GeneratedColumn<String> get assetPath =>
-      $composableBuilder(column: $table.assetPath, builder: (column) => column);
+  GeneratedColumn<String> get cardHolderName => $composableBuilder(
+      column: $table.cardHolderName, builder: (column) => column);
+
+  GeneratedColumn<String> get cvv =>
+      $composableBuilder(column: $table.cvv, builder: (column) => column);
+
+  GeneratedColumn<String> get issuedCountry => $composableBuilder(
+      column: $table.issuedCountry, builder: (column) => column);
 }
 
 class $$CardsTableTableManager extends RootTableManager<
@@ -438,28 +551,36 @@ class $$CardsTableTableManager extends RootTableManager<
             Value<String> cardNumber = const Value.absent(),
             Value<String> cardType = const Value.absent(),
             Value<String> expirationDate = const Value.absent(),
-            Value<String> assetPath = const Value.absent(),
+            Value<String> cardHolderName = const Value.absent(),
+            Value<String> cvv = const Value.absent(),
+            Value<String> issuedCountry = const Value.absent(),
           }) =>
               CardsCompanion(
             id: id,
             cardNumber: cardNumber,
             cardType: cardType,
             expirationDate: expirationDate,
-            assetPath: assetPath,
+            cardHolderName: cardHolderName,
+            cvv: cvv,
+            issuedCountry: issuedCountry,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String cardNumber,
             required String cardType,
             required String expirationDate,
-            required String assetPath,
+            required String cardHolderName,
+            required String cvv,
+            required String issuedCountry,
           }) =>
               CardsCompanion.insert(
             id: id,
             cardNumber: cardNumber,
             cardType: cardType,
             expirationDate: expirationDate,
-            assetPath: assetPath,
+            cardHolderName: cardHolderName,
+            cvv: cvv,
+            issuedCountry: issuedCountry,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

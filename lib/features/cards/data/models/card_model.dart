@@ -7,7 +7,9 @@ class CardModel extends CardEntity with EquatableMixin {
     required super.cardNumber,
     required super.cardType,
     required super.expirationDate,
-    required super.assetPath,
+    required super.cardHolderName,
+    required super.cvv,
+    required super.issuedCountry,
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
@@ -16,7 +18,9 @@ class CardModel extends CardEntity with EquatableMixin {
       cardNumber: json['cardNumber'] as String,
       cardType: json['cardType'] as String,
       expirationDate: json['expirationDate'] as String,
-      assetPath: json['assetPath'] as String,
+      cardHolderName: json['cardHolderName'] as String,
+      cvv: json['cvv'] as String,
+      issuedCountry: json['issuedCountry'] as String,
     );
   }
 
@@ -26,10 +30,20 @@ class CardModel extends CardEntity with EquatableMixin {
       'cardNumber': cardNumber,
       'cardType': cardType,
       'expirationDate': expirationDate,
-      'assetPath': assetPath,
+      'cardHolderName': cardHolderName,
+      'cvv': cvv,
+      'issuedCountry': issuedCountry,
     };
   }
 
   @override
-  List<Object?> get props => [id, cardNumber, cardType, expirationDate, assetPath];
+  List<Object?> get props => [
+        id,
+        cardNumber,
+        cardType,
+        expirationDate,
+        cardHolderName,
+        cvv,
+        issuedCountry,
+      ];
 }

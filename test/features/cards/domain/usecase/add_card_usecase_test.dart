@@ -21,7 +21,7 @@ void main() {
   const tCardNumber = '1234567890123456';
   const tCardType = 'visa';
   const tExpirationDate = '12/25';
-  const tAssetPath = 'assets/visa.png';
+  const tCardHolderName = 'Joe Riga';
   const tCardId = 1;
 
   test(
@@ -33,7 +33,7 @@ void main() {
           cardNumber: tCardNumber,
           cardType: tCardType,
           expirationDate: tExpirationDate,
-          assetPath: tAssetPath,
+          cardHolderName: tCardHolderName,
         ),
       ).thenAnswer((_) async => const Right(tCardId));
 
@@ -42,7 +42,7 @@ void main() {
         cardNumber: tCardNumber,
         cardType: tCardType,
         expirationDate: tExpirationDate,
-        assetPath: tAssetPath,
+        cardHolderName: tCardHolderName,
       );
 
       // assert
@@ -52,7 +52,7 @@ void main() {
           cardNumber: tCardNumber,
           cardType: tCardType,
           expirationDate: tExpirationDate,
-          assetPath: tAssetPath,
+          cardHolderName: tCardHolderName,
         ),
       ).called(1);
       verifyNoMoreInteractions(mockRepository);
@@ -69,7 +69,7 @@ void main() {
           cardNumber: tCardNumber,
           cardType: tCardType,
           expirationDate: tExpirationDate,
-          assetPath: tAssetPath,
+          cardHolderName: tCardHolderName,
         ),
       ).thenAnswer((_) async => Left(failure));
 
@@ -78,7 +78,7 @@ void main() {
         cardNumber: tCardNumber,
         cardType: tCardType,
         expirationDate: tExpirationDate,
-        assetPath: tAssetPath,
+        cardHolderName: tCardHolderName,
       );
 
       // assert
@@ -88,7 +88,7 @@ void main() {
           cardNumber: tCardNumber,
           cardType: tCardType,
           expirationDate: tExpirationDate,
-          assetPath: tAssetPath,
+          cardHolderName: tCardHolderName,
         ),
       ).called(1);
       verifyNoMoreInteractions(mockRepository);

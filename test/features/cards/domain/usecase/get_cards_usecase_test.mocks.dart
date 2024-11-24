@@ -58,7 +58,7 @@ class MockCardsRepository extends _i1.Mock implements _i2.CardsRepository {
     required String? cardNumber,
     required String? cardType,
     required String? expirationDate,
-    required String? assetPath,
+    required String? cardHolderName,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -68,7 +68,7 @@ class MockCardsRepository extends _i1.Mock implements _i2.CardsRepository {
             #cardNumber: cardNumber,
             #cardType: cardType,
             #expirationDate: expirationDate,
-            #assetPath: assetPath,
+            #cardHolderName: cardHolderName,
           },
         ),
         returnValue: _i3.Future<_i4.Either<_i5.Failure, int>>.value(
@@ -81,7 +81,7 @@ class MockCardsRepository extends _i1.Mock implements _i2.CardsRepository {
               #cardNumber: cardNumber,
               #cardType: cardType,
               #expirationDate: expirationDate,
-              #assetPath: assetPath,
+              #cardHolderName: cardHolderName,
             },
           ),
         )),

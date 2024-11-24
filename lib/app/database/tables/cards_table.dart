@@ -5,5 +5,7 @@ class Cards extends Table {
   TextColumn get cardNumber => text()();
   TextColumn get cardType => text()();
   TextColumn get expirationDate => text()();
-  TextColumn get assetPath => text()();
+  TextColumn get cardHolderName => text()();
+  TextColumn get cvv => text()();
+  TextColumn get issuedCountry => text()();
 }

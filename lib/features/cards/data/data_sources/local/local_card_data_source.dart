@@ -5,7 +5,9 @@ abstract class LocalCardDataSource {
     required String cardNumber,
     required String cardType,
     required String expirationDate,
-    required String assetPath,
+    required String cardHolderName,
+    required String cvv,
+    required String issuedCountry,
   });
   Future<List<CardModel>> getCards();
   Future<void> deleteCard(int id);
