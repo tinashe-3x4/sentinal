@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sentinal/features/cards/domain/entities/cards_entity.dart';
 import 'package:sentinal/features/cards/domain/usecases/add_card_usecase.dart';
 import 'package:sentinal/features/cards/domain/usecases/delete_card_usecase.dart';
@@ -8,6 +9,7 @@ import 'package:sentinal/features/cards/domain/usecases/get_cards_usecase.dart';
 part 'cards_event.dart';
 part 'cards_state.dart';
 
+@injectable
 class CardsBloc extends Bloc<CardsEvent, CardsState> {
   CardsBloc({
     required this.getCardsUsecase,
@@ -47,7 +49,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       cardNumber: event.cardNumber,
       cardType: event.cardType,
       expirationDate: event.expirationDate,
-      assetPath: event.assetPath,
+      cardHolderName: event.cardHolderName,
     );
 
     result.fold(

@@ -6,14 +6,18 @@ class CardEntity extends Equatable {
     required this.cardNumber,
     required this.cardType,
     required this.expirationDate,
-    required this.assetPath,
+    required this.cardHolderName,
+    required this.cvv,
+    required this.issuedCountry,
   });
 
   final int id;
   final String cardNumber;
   final String cardType;
   final String expirationDate;
-  final String assetPath;
+  final String cardHolderName;
+  final String cvv;
+  final String issuedCountry;
 
   @override
   List<Object?> get props => [
@@ -21,6 +25,8 @@ class CardEntity extends Equatable {
         cardNumber,
         cardType,
         expirationDate,
-        assetPath,
+        cardHolderName,
+        cvv,
+        issuedCountry,
       ];
 }

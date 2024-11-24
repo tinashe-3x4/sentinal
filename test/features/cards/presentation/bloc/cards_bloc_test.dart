@@ -33,7 +33,9 @@ void main() {
     cardNumber: '1234 5678 9012 3456',
     cardType: 'Visa',
     expirationDate: '12/24',
-    assetPath: 'assets/visa.png',
+    cardHolderName: 'Joe Riga',
+    cvv: '123',
+    issuedCountry: 'RSA',
   );
 
   setUp(() {
@@ -97,7 +99,7 @@ void main() {
       const cardNumber = '1234 5678 9012 3456';
       const cardType = 'Visa';
       const expirationDate = '12/24';
-      const assetPath = 'assets/visa.png';
+      const cardHolderName = 'Joe Riga';
 
       blocTest<CardsBloc, CardsState>(
         'emits [CardsLoading, CardAdded, CardsLoading, CardsLoaded] when adding card succeeds',
@@ -107,7 +109,7 @@ void main() {
               cardNumber: anyNamed('cardNumber'),
               cardType: anyNamed('cardType'),
               expirationDate: anyNamed('expirationDate'),
-              assetPath: anyNamed('assetPath'),
+              cardHolderName: anyNamed('cardHolderName'),
             ),
           ).thenAnswer((_) async => const Right(1));
 
@@ -120,7 +122,7 @@ void main() {
             cardNumber: cardNumber,
             cardType: cardType,
             expirationDate: expirationDate,
-            assetPath: assetPath,
+            cardHolderName: cardHolderName,
           ),
         ),
         expect: () => [
@@ -135,7 +137,7 @@ void main() {
               cardNumber: cardNumber,
               cardType: cardType,
               expirationDate: expirationDate,
-              assetPath: assetPath,
+              cardHolderName: cardHolderName,
             ),
           ).called(1);
           verify(mockGetCardsUsecase.execute()).called(1);
@@ -150,13 +152,12 @@ void main() {
               cardNumber: anyNamed('cardNumber'),
               cardType: anyNamed('cardType'),
               expirationDate: anyNamed('expirationDate'),
-              assetPath: anyNamed('assetPath'),
+              cardHolderName: anyNamed('cardHolderName'),
             ),
           ).thenAnswer(
             (_) async => Left(DatabaseInvalidDataFailure('Invalid card data')),
           );
 
-          // Add this mock for getCardsUsecase
           when(mockGetCardsUsecase.execute()).thenAnswer((_) async => const Right([]));
 
           return cardsBloc;
@@ -166,7 +167,7 @@ void main() {
             cardNumber: cardNumber,
             cardType: cardType,
             expirationDate: expirationDate,
-            assetPath: assetPath,
+            cardHolderName: cardHolderName,
           ),
         ),
         expect: () => [
@@ -181,7 +182,7 @@ void main() {
               cardNumber: cardNumber,
               cardType: cardType,
               expirationDate: expirationDate,
-              assetPath: assetPath,
+              cardHolderName: cardHolderName,
             ),
           ).called(1);
           verify(mockGetCardsUsecase.execute()).called(1);

@@ -1,8 +1,10 @@
 import 'package:drift/drift.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sentinal/app/database/app_database.dart';
 import 'package:sentinal/features/cards/data/data_sources/local/local_card_data_source.dart';
 import 'package:sentinal/features/cards/data/models/card_model.dart';
 
+@LazySingleton(as: LocalCardDataSource)
 class LocalCardDataSourceImpl extends LocalCardDataSource {
   LocalCardDataSourceImpl(this._db);
   final AppDatabase _db;
@@ -12,13 +14,17 @@ class LocalCardDataSourceImpl extends LocalCardDataSource {
     required String cardNumber,
     required String cardType,
     required String expirationDate,
-    required String assetPath,
+    required String cardHolderName,
+    required String cvv,
+    required String issuedCountry,
   }) async {
     final card = CardsCompanion(
       cardNumber: Value(cardNumber),
       cardType: Value(cardType),
       expirationDate: Value(expirationDate),
-      assetPath: Value(assetPath),
+      cardHolderName: Value(cardHolderName),
+      cvv: Value(cvv),
+      issuedCountry: Value(issuedCountry),
     );
 
     return _db.into(_db.cards).insert(card);
@@ -34,7 +40,9 @@ class LocalCardDataSourceImpl extends LocalCardDataSource {
             cardNumber: row.cardNumber,
             cardType: row.cardType,
             expirationDate: row.expirationDate,
-            assetPath: row.assetPath,
+            cardHolderName: row.cardHolderName,
+            cvv: row.cvv,
+            issuedCountry: row.issuedCountry,
           ),
         )
         .toList();

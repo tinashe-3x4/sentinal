@@ -8,7 +8,7 @@ abstract class CardsRepository {
     required String cardNumber,
     required String cardType,
     required String expirationDate,
-    required String assetPath,
+    required String cardHolderName,
   });
   Future<Either<Failure, Unit>> deleteCard(int id);
 }

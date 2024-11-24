@@ -1,11 +1,13 @@
 import 'package:drift/drift.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sentinal/app/errors/database_failure.dart';
 import 'package:sentinal/app/errors/failure.dart';
 import 'package:sentinal/features/cards/data/data_sources/local/local_card_data_source.dart';
 import 'package:sentinal/features/cards/domain/entities/cards_entity.dart';
 import 'package:sentinal/features/cards/domain/repositories/cards_repository.dart';
 
+@LazySingleton(as: CardsRepository)
 class CardsRepositoryImpl extends CardsRepository {
   CardsRepositoryImpl({required this.localCardDataSource});
 
@@ -16,14 +18,16 @@ class CardsRepositoryImpl extends CardsRepository {
     required String cardNumber,
     required String cardType,
     required String expirationDate,
-    required String assetPath,
+    required String cardHolderName,
   }) async {
     try {
      final cardId = await localCardDataSource.addCard(
-        assetPath: assetPath,
+        cardHolderName: cardHolderName,
         cardNumber: cardNumber,
         cardType: cardType,
         expirationDate: expirationDate,
+        cvv: '123',
+        issuedCountry: 'RSA',
       );
 
       return Right(cardId);

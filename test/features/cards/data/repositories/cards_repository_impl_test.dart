@@ -37,15 +37,19 @@ void main() {
       cardNumber: '1234 5678 9012 3456',
       cardType: 'Visa',
       expirationDate: '12/23',
-      assetPath: 'assets/cards/visa.png',
+      cardHolderName: 'Joe Riga',
+      cvv: '123',
+      issuedCountry: 'RSA',
     );
 
     when(
       mockLocalCardDataSource.addCard(
-        assetPath: testCard.assetPath,
+        cardHolderName: testCard.cardHolderName,
         cardNumber: testCard.cardNumber,
         cardType: testCard.cardType,
         expirationDate: testCard.expirationDate,
+        cvv: testCard.cvv,
+        issuedCountry: testCard.issuedCountry,
       ),
     ).thenAnswer((_) async => 1);
 
@@ -54,17 +58,19 @@ void main() {
       cardNumber: testCard.cardNumber,
       cardType: testCard.cardType,
       expirationDate: testCard.expirationDate,
-      assetPath: testCard.assetPath,
+      cardHolderName: testCard.cardHolderName,
     );
 
     // Assert
     expect(result, const Right<Failure, int>(1));
     verify(
       mockLocalCardDataSource.addCard(
-        assetPath: testCard.assetPath,
+        cardHolderName: testCard.cardHolderName,
         cardNumber: testCard.cardNumber,
         cardType: testCard.cardType,
         expirationDate: testCard.expirationDate,
+        cvv: testCard.cvv,
+        issuedCountry: testCard.issuedCountry,
       ),
     ).called(1);
     verifyNoMoreInteractions(mockLocalCardDataSource);
@@ -92,14 +98,18 @@ void main() {
         cardNumber: '1234 5678 9012 3456',
         cardType: 'Visa',
         expirationDate: '12/23',
-        assetPath: 'assets/cards/visa.png',
+        cardHolderName: 'Joe Riga',
+        cvv: '123',
+        issuedCountry: 'RSA',
       ),
       const CardModel(
         id: 2,
         cardNumber: '9876 5432 1098 7654',
         cardType: 'Mastercard',
         expirationDate: '03/25',
-        assetPath: 'assets/cards/mastercard.png',
+        cardHolderName: 'Joe Riga',
+        cvv: '123',
+        issuedCountry: 'RSA',
       ),
     ];
 
