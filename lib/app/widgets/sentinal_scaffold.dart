@@ -30,7 +30,7 @@ class _SentinalScaffoldState extends State<SentinalScaffold> {
     return AutoTabsRouter(
       routes: const [
         SavedCardsRoute(),
-        SavedCardsRoute(),
+        BannedCountries(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
