@@ -397,15 +397,197 @@ class CardsCompanion extends UpdateCompanion<Card> {
   }
 }
 
+class $BannedCountriesTable extends BannedCountries
+    with TableInfo<$BannedCountriesTable, BannedCountry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BannedCountriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _countryMeta =
+      const VerificationMeta('country');
+  @override
+  late final GeneratedColumn<String> country = GeneratedColumn<String>(
+      'country', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, country];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'banned_countries';
+  @override
+  VerificationContext validateIntegrity(Insertable<BannedCountry> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('country')) {
+      context.handle(_countryMeta,
+          country.isAcceptableOrUnknown(data['country']!, _countryMeta));
+    } else if (isInserting) {
+      context.missing(_countryMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BannedCountry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BannedCountry(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      country: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}country'])!,
+    );
+  }
+
+  @override
+  $BannedCountriesTable createAlias(String alias) {
+    return $BannedCountriesTable(attachedDatabase, alias);
+  }
+}
+
+class BannedCountry extends DataClass implements Insertable<BannedCountry> {
+  final int id;
+  final String country;
+  const BannedCountry({required this.id, required this.country});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['country'] = Variable<String>(country);
+    return map;
+  }
+
+  BannedCountriesCompanion toCompanion(bool nullToAbsent) {
+    return BannedCountriesCompanion(
+      id: Value(id),
+      country: Value(country),
+    );
+  }
+
+  factory BannedCountry.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BannedCountry(
+      id: serializer.fromJson<int>(json['id']),
+      country: serializer.fromJson<String>(json['country']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'country': serializer.toJson<String>(country),
+    };
+  }
+
+  BannedCountry copyWith({int? id, String? country}) => BannedCountry(
+        id: id ?? this.id,
+        country: country ?? this.country,
+      );
+  BannedCountry copyWithCompanion(BannedCountriesCompanion data) {
+    return BannedCountry(
+      id: data.id.present ? data.id.value : this.id,
+      country: data.country.present ? data.country.value : this.country,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BannedCountry(')
+          ..write('id: $id, ')
+          ..write('country: $country')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, country);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BannedCountry &&
+          other.id == this.id &&
+          other.country == this.country);
+}
+
+class BannedCountriesCompanion extends UpdateCompanion<BannedCountry> {
+  final Value<int> id;
+  final Value<String> country;
+  const BannedCountriesCompanion({
+    this.id = const Value.absent(),
+    this.country = const Value.absent(),
+  });
+  BannedCountriesCompanion.insert({
+    this.id = const Value.absent(),
+    required String country,
+  }) : country = Value(country);
+  static Insertable<BannedCountry> custom({
+    Expression<int>? id,
+    Expression<String>? country,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (country != null) 'country': country,
+    });
+  }
+
+  BannedCountriesCompanion copyWith({Value<int>? id, Value<String>? country}) {
+    return BannedCountriesCompanion(
+      id: id ?? this.id,
+      country: country ?? this.country,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (country.present) {
+      map['country'] = Variable<String>(country.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BannedCountriesCompanion(')
+          ..write('id: $id, ')
+          ..write('country: $country')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $CardsTable cards = $CardsTable(this);
+  late final $BannedCountriesTable bannedCountries =
+      $BannedCountriesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [cards];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [cards, bannedCountries];
 }
 
 typedef $$CardsTableCreateCompanionBuilder = CardsCompanion Function({
@@ -601,10 +783,135 @@ typedef $$CardsTableProcessedTableManager = ProcessedTableManager<
     (Card, BaseReferences<_$AppDatabase, $CardsTable, Card>),
     Card,
     PrefetchHooks Function()>;
+typedef $$BannedCountriesTableCreateCompanionBuilder = BannedCountriesCompanion
+    Function({
+  Value<int> id,
+  required String country,
+});
+typedef $$BannedCountriesTableUpdateCompanionBuilder = BannedCountriesCompanion
+    Function({
+  Value<int> id,
+  Value<String> country,
+});
+
+class $$BannedCountriesTableFilterComposer
+    extends Composer<_$AppDatabase, $BannedCountriesTable> {
+  $$BannedCountriesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get country => $composableBuilder(
+      column: $table.country, builder: (column) => ColumnFilters(column));
+}
+
+class $$BannedCountriesTableOrderingComposer
+    extends Composer<_$AppDatabase, $BannedCountriesTable> {
+  $$BannedCountriesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get country => $composableBuilder(
+      column: $table.country, builder: (column) => ColumnOrderings(column));
+}
+
+class $$BannedCountriesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BannedCountriesTable> {
+  $$BannedCountriesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get country =>
+      $composableBuilder(column: $table.country, builder: (column) => column);
+}
+
+class $$BannedCountriesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $BannedCountriesTable,
+    BannedCountry,
+    $$BannedCountriesTableFilterComposer,
+    $$BannedCountriesTableOrderingComposer,
+    $$BannedCountriesTableAnnotationComposer,
+    $$BannedCountriesTableCreateCompanionBuilder,
+    $$BannedCountriesTableUpdateCompanionBuilder,
+    (
+      BannedCountry,
+      BaseReferences<_$AppDatabase, $BannedCountriesTable, BannedCountry>
+    ),
+    BannedCountry,
+    PrefetchHooks Function()> {
+  $$BannedCountriesTableTableManager(
+      _$AppDatabase db, $BannedCountriesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BannedCountriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BannedCountriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BannedCountriesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> country = const Value.absent(),
+          }) =>
+              BannedCountriesCompanion(
+            id: id,
+            country: country,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String country,
+          }) =>
+              BannedCountriesCompanion.insert(
+            id: id,
+            country: country,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$BannedCountriesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $BannedCountriesTable,
+    BannedCountry,
+    $$BannedCountriesTableFilterComposer,
+    $$BannedCountriesTableOrderingComposer,
+    $$BannedCountriesTableAnnotationComposer,
+    $$BannedCountriesTableCreateCompanionBuilder,
+    $$BannedCountriesTableUpdateCompanionBuilder,
+    (
+      BannedCountry,
+      BaseReferences<_$AppDatabase, $BannedCountriesTable, BannedCountry>
+    ),
+    BannedCountry,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$CardsTableTableManager get cards =>
       $$CardsTableTableManager(_db, _db.cards);
+  $$BannedCountriesTableTableManager get bannedCountries =>
+      $$BannedCountriesTableTableManager(_db, _db.bannedCountries);
 }

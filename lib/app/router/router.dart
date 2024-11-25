@@ -15,8 +15,8 @@ class AppRouter extends RootStackRouter {
               path: 'cards',
             ),
             AutoRoute(
-              page: SavedCardsRoute.page,
-              path: 'cards1',
+              page: BannedCountries.page,
+              path: 'banned-countries',
             ),
           ],
         ),

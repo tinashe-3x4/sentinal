@@ -24,12 +24,14 @@ void main() {
   });
 
   test('addCard should insert a card into the database', () async {
-    final cardModel = CardModel(
+    const cardModel =  CardModel(
       id: 1,
       cardNumber: '1234 5678 9012 3456',
       cardType: 'Visa',
       expirationDate: '12/25',
       cardHolderName: 'Joe Riga',
+      cvv: '123',
+      issuedCountry: 'RSA',
     );
 
     await dataSource.addCard(
@@ -37,6 +39,8 @@ void main() {
       cardType: cardModel.cardType,
       expirationDate: cardModel.expirationDate,
       cardHolderName: cardModel.cardHolderName,
+      cvv: cardModel.cvv,
+      issuedCountry: cardModel.issuedCountry,
     );
 
     final cards = await dataSource.getCards();
@@ -52,6 +56,8 @@ void main() {
       cardType: 'Visa',
       expirationDate: '12/25',
       cardHolderName: 'Joe Riga',
+      cvv: '123',
+      issuedCountry: 'RSA',
     );
     const card2 = CardModel(
       id: 2,
@@ -59,6 +65,8 @@ void main() {
       cardType: 'MasterCard',
       expirationDate: '11/24',
       cardHolderName: 'Joe Riga',
+      cvv: '123',
+      issuedCountry: 'RSA',
     );
 
     await dataSource.addCard(
@@ -66,6 +74,8 @@ void main() {
       cardType: card1.cardType,
       expirationDate: card1.expirationDate,
       cardHolderName: card1.cardHolderName,
+      cvv: card1.cvv,
+      issuedCountry: card1.issuedCountry,
     );
 
     await dataSource.addCard(
@@ -73,6 +83,8 @@ void main() {
       cardType: card2.cardType,
       expirationDate: card2.expirationDate,
       cardHolderName: card2.cardHolderName,
+      cvv: card2.cvv,
+      issuedCountry: card2.issuedCountry,
     );
 
     final insertedCards = await dataSource.getCards();
@@ -88,6 +100,8 @@ void main() {
       cardType: 'Visa',
       expirationDate: '12/25',
       cardHolderName: 'Joe Riga',
+      cvv: '123',
+      issuedCountry: 'RSA',
     );
 
     final id = await dataSource.addCard(
@@ -95,6 +109,8 @@ void main() {
       cardType: cardModel.cardType,
       expirationDate: cardModel.expirationDate,
       cardHolderName: cardModel.cardHolderName,
+      cvv: cardModel.cvv,
+      issuedCountry: cardModel.issuedCountry,
     );
 
     await dataSource.deleteCard(id);
